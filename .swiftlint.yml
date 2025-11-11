@@ -2,28 +2,18 @@
 
 # Paths to include
 included:
-  - Apps
-  - Core
+  - Sources
+  - Tests
 
 # Paths to exclude
 excluded:
   - .build
   - DerivedData
-  - "**/Generated"
-  - "**/Resources"
-  - "**/.build"
-  - "**/Package.swift"
-  - "**/Tests/Resources"
-  - "Apps/CLI/.build"
-  - "**/DerivedData"
   - "**/.swiftpm"
-  - Pods
-  - Carthage
-  - fastlane
-  - vendor
+  - "**/.build"
+  - "**/DerivedData"
+  - "**/Tests/Resources"
   - "*.playground"
-  # Exclude specific files that should not be linted/formatted
-  - "Core/PeekabooCore/Sources/PeekabooCore/Extensions/NSArray+Extensions.swift"
 
 # Analyzer rules (require compilation)
 analyzer_rules:

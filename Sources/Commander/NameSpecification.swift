@@ -24,17 +24,17 @@ public enum NameSpecification: Sendable {
     func resolve(defaultLabel: String) -> [CommanderName] {
         switch self {
         case .automatic:
-            return [.long(Self.normalize(defaultLabel))]
-        case .short(let char):
-            return [.short(char)]
-        case .longName(let name):
-            return [.long(name)]
+            [.long(Self.normalize(defaultLabel))]
+        case let .short(char):
+            [.short(char)]
+        case let .longName(name):
+            [.long(name)]
         case .shortAndLong:
-            return [.short(Self.firstCharacter(in: defaultLabel)), .long(Self.normalize(defaultLabel))]
-        case .customShort(let char, _):
-            return [.short(char)]
-        case .customLong(let name):
-            return [.long(name)]
+            [.short(Self.firstCharacter(in: defaultLabel)), .long(Self.normalize(defaultLabel))]
+        case let .customShort(char, _):
+            [.short(char)]
+        case let .customLong(name):
+            [.long(name)]
         }
     }
 

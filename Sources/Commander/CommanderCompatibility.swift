@@ -39,12 +39,12 @@ public protocol ParsableCommand: Sendable {
     mutating func run() async throws
 }
 
-public extension ParsableCommand {
-    static var configuration: CommandConfiguration {
+extension ParsableCommand {
+    public static var configuration: CommandConfiguration {
         CommandConfiguration()
     }
 
-    mutating func run() async throws {}
+    public mutating func run() async throws {}
 }
 
 public typealias ParsableArguments = CommanderParsable

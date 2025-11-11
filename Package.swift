@@ -4,21 +4,18 @@ import PackageDescription
 let package = Package(
     name: "Commander",
     platforms: [
-        .macOS(.v13)
+        .macOS(.v13),
     ],
     products: [
-        .library(name: "Commander", targets: ["Commander"])
+        .library(name: "Commander", targets: ["Commander"]),
     ],
     targets: [
         .target(
             name: "Commander",
-            path: "Sources/Commander"
-        ),
+            path: "Sources/Commander"),
         .testTarget(
             name: "CommanderTests",
             dependencies: ["Commander"],
-            path: "Tests/CommanderTests"
-        )
+            path: "Tests/CommanderTests"),
     ],
-    swiftLanguageModes: [.v6]
-)
+    swiftLanguageModes: [.v6])
