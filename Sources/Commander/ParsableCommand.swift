@@ -1,6 +1,6 @@
 import Foundation
 
-public struct CommandConfiguration: Sendable {
+public struct CommandDescription: Sendable {
     public var commandName: String?
     public var abstract: String
     public var discussion: String?
@@ -26,8 +26,8 @@ public struct CommandConfiguration: Sendable {
 }
 
 @MainActor
-public enum MainActorCommandConfiguration {
-    public nonisolated static func describe(_ build: () -> CommandConfiguration) -> CommandConfiguration {
+public enum MainActorCommandDescription {
+    public nonisolated static func describe(_ build: () -> CommandDescription) -> CommandDescription {
         build()
     }
 }
@@ -35,20 +35,17 @@ public enum MainActorCommandConfiguration {
 @MainActor
 public protocol ParsableCommand: Sendable {
     init()
-    static var configuration: CommandConfiguration { get }
+    static var commandDescription: CommandDescription { get }
     mutating func run() async throws
 }
 
-extension ParsableCommand {
-    public static var configuration: CommandConfiguration {
-        CommandConfiguration()
+public extension ParsableCommand {
+    static var commandDescription: CommandDescription {
+        CommandDescription()
     }
 
-    public mutating func run() async throws {}
+    mutating func run() async throws {}
 }
-
-public typealias ParsableArguments = CommanderParsable
-public typealias ExpressibleByArgument = ExpressibleFromArgument
 
 public struct ValidationError: Error, LocalizedError, CustomStringConvertible, Sendable {
     private let message: String

@@ -17,6 +17,8 @@ Commander is Peekaboo's Swift-native command-line framework. It combines declara
 
 - **Property-wrapper ergonomics** – `@Option`, `@Argument`, `@Flag`, and `@OptionGroup` mirror the Swift Argument Parser API but simply register metadata. You keep writing declarative commands while Commander handles parsing and validation centrally.
 - **Command signatures everywhere** – `CommandSignature` reflects every option/flag/argument so docs, help output, agent metadata, and tests all rely on the exact same definitions.
+- **Source-of-truth metadata** – `CommandDescription` replaces the old ArgumentParser `CommandConfiguration`, giving us Commander-native builders for abstracts, discussions, versions, and subcommand trees.
+- **Standard runtime options** – Every command gets `-v/--verbose`, `--json-output`, and `--log-level <trace|verbose|debug|info|warning|error|critical>` automatically so you can control logging without touching each command file.
 - **Program router** – `Program.resolve(argv:)` walks the descriptor tree (root command → subcommand → default subcommand) and produces a `CommandInvocation` with parsed values and the fully-qualified path.
 - **Binder APIs** – `CommanderCLIBinder` (living in PeekabooCLI) shows how to hydrate existing command structs by conforming them to `CommanderBindableCommand`. This keeps runtime logic untouched while swapping in Commander incrementally.
 - **Approachable concurrency ready** – the package enables `StrictConcurrency`, `ExistentialAny`, and `NonisolatedNonsendingByDefault` so anything that depends on Commander inherits Peekaboo's concurrency guarantees.
@@ -52,7 +54,7 @@ struct ScreenshotCommand: ParsableCommand {
     @Option(help: "Target display index") var display: Int?
     @Flag(help: "Emit JSON output") var json = false
 
-    static var configuration = CommandConfiguration(
+    static var commandDescription = CommandDescription(
         commandName: "capture",
         abstract: "Capture a screenshot"
     )
@@ -73,10 +75,34 @@ Commander handles `--help`, flag parsing, and error messages based on the metada
 
 If you need more control over how parsed values reach your command type, conform to `CommanderBindableCommand` and use the helper APIs (`decodeOption`, `makeFocusOptions`, etc.). PeekabooCLI's window/agent commands are good examples.
 
+By default the runtime injects the standard logging flags mentioned above; you can flip verbosity with `-v` or set an explicit level via `--log-level warning` (overrides environment variables like `PEEKABOO_LOG_LEVEL`).
+
+### Command Metadata
+
+Every `ParsableCommand` publishes a `CommandDescription`. The helper `MainActorCommandDescription.describe { ... }` builder keeps metadata construction on the main actor while staying nonisolated at the call-site:
+
+```swift
+@MainActor
+struct AgentCommand: ParsableCommand {
+    nonisolated(unsafe) static var commandDescription: CommandDescription {
+        MainActorCommandDescription.describe {
+            CommandDescription(
+                commandName: "agent",
+                abstract: "Run a Peekaboo automation agent",
+                subcommands: [Serve.self, List.self],
+                defaultSubcommand: Serve.self
+            )
+        }
+    }
+}
+```
+
+Commander caches these descriptions and feeds them to the router, `peekaboo learn`, and the documentation/export tooling, so the CLI, agents, and MCP metadata all stay in sync without an ArgumentParser compatibility shim.
+
 ## Repository Layout
 
 - `Sources/Commander` – Core types (property wrappers, tokenizer, parser, program descriptors, metadata helpers).
-- `Tests/CommanderTests` – Unit tests for the parser/router plus tokenizer edge cases. Run them with `swift test --package-path Commander`.
+- `Tests/CommanderTests` – Unit tests for the parser/router, tokenizer edge cases, and `CommandDescription` metadata. Run them with `swift test --package-path Commander`.
 
 ## Options & Flags Support
 

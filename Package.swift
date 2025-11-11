@@ -4,7 +4,11 @@ import PackageDescription
 let package = Package(
     name: "Commander",
     platforms: [
-        .macOS(.v13),
+        .macOS(.v14),
+        .iOS(.v17),
+        .tvOS(.v17),
+        .watchOS(.v10),
+        .visionOS(.v1),
     ],
     products: [
         .library(name: "Commander", targets: ["Commander"]),
