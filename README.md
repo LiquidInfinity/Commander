@@ -61,6 +61,14 @@ struct ScreenshotCommand: ParsableCommand {
 }
 ```
 
+Then run it like any SwiftPM executable:
+
+```bash
+$ swift run capture --display 1 --json /tmp/screen.png
+```
+
+Commander handles `--help`, flag parsing, and error messages based on the metadata in your struct.
+
 If you need more control over how parsed values reach your command type, conform to `CommanderBindableCommand` and use the helper APIs (`decodeOption`, `makeFocusOptions`, etc.). PeekabooCLI's window/agent commands are good examples.
 
 ## Repository Layout
