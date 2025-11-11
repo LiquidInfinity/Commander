@@ -9,7 +9,7 @@
   **Swift-first command-line parsing with shared metadata and approachable concurrency.**
 </div>
 
-Commander is Peekaboo's Swift-native command-line framework. It combines declarative property wrappers, a lightweight parser/router, and runtime helpers that integrate tightly with async/await + approachable concurrency. We extracted it into its own Swift package so other targets (AXorcist, Tachikoma, the CLI examples) can share the same parsing stack without carrying a fork of Apple's `swift-argument-parser`.
+Commander is Peekaboo's Swift-native command-line framework. It combines declarative property wrappers, a lightweight parser/router, and runtime helpers that integrate tightly with async/await + approachable concurrency.
 
 ## Highlights
 
