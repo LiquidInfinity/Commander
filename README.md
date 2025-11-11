@@ -78,7 +78,7 @@ If you need more control over how parsed values reach your command type, conform
 
 ## Contributing
 
-Commander is developed alongside Peekaboo. If you need an API or notice a bug, open an issue/PR in https://github.com/steipete/Commander or in the main Peekaboo repository—whichever is more convenient. Please include repro steps and any command metadata involved so we can extend the shared test suites.
+If you need an API or notice a bug, open an issue/PR in https://github.com/steipete/Commander. Please include repro steps and any command metadata involved so we can extend the shared test suites.
 
 ## License
 
