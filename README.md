@@ -76,6 +76,27 @@ If you need more control over how parsed values reach your command type, conform
 - `Sources/Commander` – Core types (property wrappers, tokenizer, parser, program descriptors, metadata helpers).
 - `Tests/CommanderTests` – Unit tests for the parser/router plus tokenizer edge cases. Run them with `swift test --package-path Commander`.
 
+## Options & Flags Support
+
+Commander mirrors the ergonomics of Swift Argument Parser while keeping the parsing logic centralized. Key building blocks:
+
+| Wrapper | Description | Notable Parameters |
+| --- | --- | --- |
+| `@Argument` | Positional values. Commander automatically enforces optionals/non-optionals. | `help` |
+| `@Option` | Named options (supports short, long, and custom spellings). | `name`, `names`, `parsing` (`singleValue`, `upToNextOption`, `remaining`) |
+| `@Flag` | Boolean switches. Commander automatically wires both short & long spellings. | `name`, `names`, `help` |
+| `@OptionGroup` | Reusable sets of options/flags (e.g., focus/window option structs). | – |
+
+Every command automatically gets the standard runtime flags `--verbose` / `-v` and `--json-output`, courtesy of `CommandSignature.withStandardRuntimeFlags()`.
+
+`OptionParsingStrategy` mirrors the most common CLI behaviors:
+
+- `singleValue`: exactly one argument follows the option (default).
+- `upToNextOption`: consume all values until the next option/flag (perfect for `--include foo bar`).
+- `remaining`: consume the rest of `argv` (after `--`).
+
+For advanced scenarios, `CommanderBindableValues` gives you helpers (`decodeOption`, `requireOption`, `makeWindowOptions`, etc.) so existing command types can conform to `CommanderBindableCommand` and hydrate themselves from parsed values without rewriting runtime logic.
+
 ## Contributing
 
 If you need an API or notice a bug, open an issue/PR in https://github.com/steipete/Commander. Please include repro steps and any command metadata involved so we can extend the shared test suites.
