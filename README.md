@@ -82,4 +82,4 @@ If you need an API or notice a bug, open an issue/PR in https://github.com/steip
 
 ## License
 
-Commander inherits Peekaboo's license. Refer to the root `LICENSE` file in this repository for the exact terms.
+Commander is released under the MIT license. Refer to `LICENSE` for details.
