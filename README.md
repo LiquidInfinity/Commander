@@ -6,7 +6,9 @@
 
   # Commander
 
-  **Swift-first command-line parsing with shared metadata and approachable concurrency.**
+  **Swift-first parsing. Total command over your CLI.**<br>
+  **One signature. Infinite tooling.**<br>
+  **All the ergonomics, none of the forks.**
 </div>
 
 Commander is Peekaboo's Swift-native command-line framework. It combines declarative property wrappers, a lightweight parser/router, and runtime helpers that integrate tightly with async/await + approachable concurrency.
