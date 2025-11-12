@@ -89,8 +89,7 @@ extension CommandSignature {
             label: "logLevel",
             names: [.long("log-level"), .long("logLevel")],
             help: "Set log level (trace|verbose|debug|info|warning|error|critical)",
-            parsing: .singleValue
-        )
+            parsing: .singleValue)
         copy.flags.append(contentsOf: [verboseFlag, jsonFlag])
         copy.options.append(logLevelOption)
         return copy
