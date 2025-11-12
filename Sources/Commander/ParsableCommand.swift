@@ -26,31 +26,31 @@ public struct CommandDescription: Sendable {
     }
 }
 
+@MainActor
 /// Helper for building ``CommandDescription`` values while staying on the main
 /// actor (useful when you need to query `@MainActor` state).
-@MainActor
 public enum MainActorCommandDescription {
     public nonisolated static func describe(_ build: () -> CommandDescription) -> CommandDescription {
         build()
     }
 }
 
+@MainActor
 /// Protocol every Commander command adopts. Provide metadata via
 /// ``commandDescription`` and implement ``run()`` to perform the command's
 /// work.
-@MainActor
 public protocol ParsableCommand: Sendable {
     init()
     static var commandDescription: CommandDescription { get }
     mutating func run() async throws
 }
 
-extension ParsableCommand {
-    public static var commandDescription: CommandDescription {
+public extension ParsableCommand {
+    static var commandDescription: CommandDescription {
         CommandDescription()
     }
 
-    public mutating func run() async throws {}
+    mutating func run() async throws {}
 }
 
 /// Thrown from ``ParsableCommand/run()`` when user input fails validation.
