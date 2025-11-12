@@ -9,14 +9,16 @@ private struct SampleRootCommand: ParsableCommand {
         discussion: "Used for verifying Commander metadata",
         version: "1.0",
         subcommands: [SampleSubcommand.self],
-        defaultSubcommand: SampleSubcommand.self)
+        defaultSubcommand: SampleSubcommand.self
+    )
 }
 
 @MainActor
 private struct SampleSubcommand: ParsableCommand {
     static let commandDescription = CommandDescription(
         commandName: "child",
-        abstract: "Child command")
+        abstract: "Child command"
+    )
 }
 
 @Suite("CommandDescription")
