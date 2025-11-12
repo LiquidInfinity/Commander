@@ -147,3 +147,11 @@ If you need an API or notice a bug, open an issue/PR in https://github.com/steip
 ## License
 
 Commander is released under the MIT license. Refer to `LICENSE` for details.
+
+## Coverage
+
+| Date       | Command                                                             | Scope             | Line Coverage |
+| ---------- | ------------------------------------------------------------------- | ----------------- | ------------- |
+| 2025-11-12 | `./runner swift test --package-path Commander --enable-code-coverage` | Commander package | 75.63 %       |
+
+> Coverage is generated with `xcrun llvm-cov report Commander/.build/debug/CommanderPackageTests.xctest/Contents/MacOS/CommanderPackageTests -instr-profile Commander/.build/debug/codecov/default.profdata`.
