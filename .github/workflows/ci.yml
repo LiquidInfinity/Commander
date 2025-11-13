@@ -20,18 +20,18 @@ jobs:
         if: runner.os == 'macOS'
         run: sudo xcode-select -s /Applications/Xcode_16.0.app || sudo xcode-select -s /Applications/Xcode.app
 
-      - name: Install Swift 6.0 (Linux)
+      - name: Install Swift 6.0.1 (Linux)
         if: runner.os == 'Linux'
         uses: swift-actions/setup-swift@v1
         with:
-          swift-version: '6.0'
+          swift-version: '6.0.1'
 
-      - name: Install Swift 6.0 (Windows)
+      - name: Install Swift 6.0.1 (Windows)
         if: runner.os == 'Windows'
         uses: compnerd/gha-setup-swift@main
         with:
-          swift-version: swift-6.0-release
-          swift-build: 6.0-RELEASE
+          swift-version: swift-6.0.1-release
+          swift-build: 6.0.1-RELEASE
 
       - name: Build
         run: swift build --build-tests
