@@ -7,13 +7,75 @@ on:
     branches: [ main ]
 
 jobs:
-  build-and-test:
+  desktop-swift:
+    name: Desktop Swift (${{ matrix.os }})
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-22.04, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode 16
+        if: runner.os == 'macOS'
+        run: sudo xcode-select -s /Applications/Xcode_16.0.app || sudo xcode-select -s /Applications/Xcode.app
+
+      - name: Install Swift 6.2 (Linux)
+        if: runner.os == 'Linux'
+        uses: swift-actions/setup-swift@v1
+        with:
+          swift-version: '6.2'
+
+      - name: Install Swift 6.2 (Windows)
+        if: runner.os == 'Windows'
+        uses: compnerd/gha-setup-swift@main
+        with:
+          swift-version: swift-6.2-release
+          swift-build: 6.2-RELEASE
+
+      - name: Build
+        run: swift build --build-tests
+
+      - name: Test
+        run: swift test --parallel
+
+  apple-simulators:
+    name: Apple Platforms (${{ matrix.platform }})
     runs-on: macos-latest
+    needs: desktop-swift
+    strategy:
+      matrix:
+        platform:
+          - "iOS Simulator"
+          - "tvOS Simulator"
+          - "watchOS Simulator"
+          - "visionOS Simulator"
     steps:
       - uses: actions/checkout@v4
       - name: Select Xcode 16
         run: sudo xcode-select -s /Applications/Xcode_16.0.app || sudo xcode-select -s /Applications/Xcode.app
-      - name: Build
-        run: swift build
-      - name: Test
-        run: swift test
+      - name: Build for ${{ matrix.platform }}
+        run: |
+          xcodebuild \
+            -scheme Commander-Package \
+            -destination "generic/platform=${{ matrix.platform }}" \
+            BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
+            build
+
+  android:
+    name: Android (aarch64)
+    runs-on: ubuntu-22.04
+    needs: desktop-swift
+    container:
+      image: ghcr.io/swiftlang/swift:nightly-android-amd64
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Android artifacts
+        env:
+          SWIFT_ANDROID_TRIPLE: aarch64-unknown-linux-android24
+        run: |
+          swift build \
+            --triple ${SWIFT_ANDROID_TRIPLE} \
+            --build-path .build-android \
+            --cxx-flags "-fPIC" \
+            --swift-sdk android
