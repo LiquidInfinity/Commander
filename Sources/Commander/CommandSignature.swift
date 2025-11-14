@@ -83,11 +83,16 @@ extension CommandSignature {
             help: "Enable verbose logging")
         let jsonFlag = FlagDefinition(
             label: "jsonOutput",
-            names: [.long("json-output"), .long("jsonOutput"), .long("json"), .short("j")],
+            names: [
+                .long("json"),
+                .short("j"),
+                .aliasLong("json-output"),
+                .aliasLong("jsonOutput"),
+            ],
             help: "Emit machine-readable JSON output")
         let logLevelOption = OptionDefinition(
             label: "logLevel",
-            names: [.long("log-level"), .long("logLevel")],
+            names: [.long("log-level"), .aliasLong("logLevel")],
             help: "Set log level (trace|verbose|debug|info|warning|error|critical)",
             parsing: .singleValue)
         copy.flags.append(contentsOf: [verboseFlag, jsonFlag])

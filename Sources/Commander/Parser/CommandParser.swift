@@ -125,10 +125,9 @@ public struct CommandParser {
         var lookup: [String: OptionDefinition] = [:]
         for definition in definitions {
             for name in definition.names {
-                switch name {
-                case let .long(longName):
+                if let longName = name.longComponent {
                     lookup[longName] = definition
-                case let .short(shortName):
+                } else if let shortName = name.shortComponent {
                     lookup[String(shortName)] = definition
                 }
             }
@@ -140,10 +139,9 @@ public struct CommandParser {
         var lookup: [String: String] = [:]
         for definition in definitions {
             for name in definition.names {
-                switch name {
-                case let .long(longName):
+                if let longName = name.longComponent {
                     lookup[longName] = definition.label
-                case let .short(shortName):
+                } else if let shortName = name.shortComponent {
                     lookup[String(shortName)] = definition.label
                 }
             }

@@ -1,6 +1,16 @@
 import Foundation
 
 /// Declarative metadata describing a command built with ``ParsableCommand``.
+public struct CommandUsageExample: Sendable {
+    public var command: String
+    public var description: String
+
+    public init(command: String, description: String) {
+        self.command = command
+        self.description = description
+    }
+}
+
 public struct CommandDescription: Sendable {
     public var commandName: String?
     public var abstract: String
@@ -8,6 +18,8 @@ public struct CommandDescription: Sendable {
     public var version: String?
     public var subcommands: [any ParsableCommand.Type]
     public var defaultSubcommand: (any ParsableCommand.Type)?
+    public var usageExamples: [CommandUsageExample]
+    public var showHelpOnEmptyInvocation: Bool
 
     public init(
         commandName: String? = nil,
@@ -15,7 +27,9 @@ public struct CommandDescription: Sendable {
         discussion: String? = nil,
         version: String? = nil,
         subcommands: [any ParsableCommand.Type] = [],
-        defaultSubcommand: (any ParsableCommand.Type)? = nil)
+        defaultSubcommand: (any ParsableCommand.Type)? = nil,
+        usageExamples: [CommandUsageExample] = [],
+        showHelpOnEmptyInvocation: Bool = false)
     {
         self.commandName = commandName
         self.abstract = abstract
@@ -23,6 +37,8 @@ public struct CommandDescription: Sendable {
         self.version = version
         self.subcommands = subcommands
         self.defaultSubcommand = defaultSubcommand
+        self.usageExamples = usageExamples
+        self.showHelpOnEmptyInvocation = showHelpOnEmptyInvocation
     }
 }
 

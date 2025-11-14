@@ -4,6 +4,37 @@ import Foundation
 public enum CommanderName: Equatable, Sendable {
     case short(Character)
     case long(String)
+    case aliasShort(Character)
+    case aliasLong(String)
+}
+
+extension CommanderName {
+    var longComponent: String? {
+        switch self {
+        case let .long(value), let .aliasLong(value):
+            value
+        default:
+            nil
+        }
+    }
+
+    var shortComponent: Character? {
+        switch self {
+        case let .short(value), let .aliasShort(value):
+            value
+        default:
+            nil
+        }
+    }
+
+    public var isAlias: Bool {
+        switch self {
+        case .aliasShort, .aliasLong:
+            true
+        default:
+            false
+        }
+    }
 }
 
 /// Mimics ArgumentParser's name specification convenience API.

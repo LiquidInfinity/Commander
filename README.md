@@ -134,6 +134,23 @@ Commander mirrors the ergonomics of Swift Argument Parser while keeping the pars
 
 Every command automatically gets the standard runtime flags `--verbose` / `-v` and `--json-output`, courtesy of `CommandSignature.withStandardRuntimeFlags()`.
 
+Need compatibility spellings (like `--json-output` alongside `--json`)? Use the alias helpers so Commander’s help output only shows the canonical names while the parser still accepts every variant:
+
+```swift
+let jsonFlag = FlagDefinition(
+    label: "jsonOutput",
+    names: [
+        .short("j"),
+        .long("json"),
+        .aliasLong("json-output"),
+        .aliasLong("jsonOutput")
+    ],
+    help: "Emit machine-readable JSON output"
+)
+```
+
+`aliasLong` / `aliasShort` behave exactly like the regular cases during parsing, but Commander omits them from generated help text and metadata exports so your CLI docs stay concise.
+
 `OptionParsingStrategy` mirrors the most common CLI behaviors:
 
 - `singleValue`: exactly one argument follows the option (default).
