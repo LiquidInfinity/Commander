@@ -98,7 +98,6 @@ disabled_rules:
 # Rule configurations
 force_cast: warning
 force_try: warning
-force_unwrapping: warning
 
 # identifier_name rule disabled - see disabled_rules section
 
