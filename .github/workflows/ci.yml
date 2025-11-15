@@ -29,7 +29,7 @@ jobs:
 
       - name: Install Swift toolchain (Windows)
         if: runner.os == 'Windows'
-      uses: compnerd/gha-setup-swift@v0.3.0
+        uses: compnerd/gha-setup-swift@v0.3.0
         with:
           branch: swift-6.2-release
           tag: 6.2-RELEASE
