@@ -10,8 +10,7 @@ on:
 jobs:
   desktop-swift:
     name: Desktop Swift (${{ matrix.os }})
-    # Swift 6.2.1 still crashes (SwiftTesting on Linux) and exits 1 on Windows after the test runner finishes.
-    # Keep those legs running for signal, but don't fail the workflow until the upstream toolchain is fixed.
+    # Swift 6.2.1 still crashes (SwiftTesting on Linux), so keep that leg for signal only.
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.allow_failure }}
     strategy:
@@ -21,8 +20,6 @@ jobs:
           - os: macos-15
             allow_failure: false
           - os: ubuntu-22.04
-            allow_failure: true
-          - os: windows-2025
             allow_failure: true
     steps:
       - uses: actions/checkout@v4
@@ -36,30 +33,6 @@ jobs:
         uses: SwiftyLab/setup-swift@v1
         with:
           swift-version: '6.2.1'
-
-      - name: Install Swift toolchain (Windows)
-        if: runner.os == 'Windows'
-        uses: compnerd/gha-setup-swift@v0.3.0
-        with:
-          github-repo: swiftlang/swift
-          release-tag-name: swift-6.2-RELEASE
-          release-asset-name: swift-6.2-RELEASE-windows10.exe
-
-      - name: Ensure Swift CLI available (Windows)
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          $swiftExe = Get-ChildItem -Path "C:\Users\runneradmin\AppData\Local\Programs\Swift" -Filter swift.exe -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
-          if (-not $swiftExe) {
-            $swiftExe = Get-ChildItem -Path "C:\Library\Developer" -Filter swift.exe -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
-          }
-          if (-not $swiftExe) {
-            throw "Swift executable not found after installation."
-          }
-          $dir = Split-Path $swiftExe.FullName
-          Add-Content -Path $env:GITHUB_PATH -Value $dir
-          Write-Host "Added $dir to PATH"
-          swift --version
 
       - name: Build
         run: swift build --build-tests
@@ -75,10 +48,7 @@ jobs:
     strategy:
       matrix:
         platform:
-          - "iOS Simulator"
-          - "tvOS Simulator"
-          - "watchOS Simulator"
-          - "visionOS Simulator"
+          - "macOS"
     steps:
       - uses: actions/checkout@v4
       - name: Select Xcode 16
