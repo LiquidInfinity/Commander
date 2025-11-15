@@ -12,11 +12,17 @@ jobs:
     name: Desktop Swift (${{ matrix.os }})
     # Swift 6.2.1 still crashes (SwiftTesting on Linux) and exits 1 on Windows after the test runner finishes.
     # Keep those legs running for signal, but don't fail the workflow until the upstream toolchain is fixed.
-    continue-on-error: ${{ matrix.os != 'macos-15' }}
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-15, ubuntu-22.04, windows-2025]
+        include:
+          - os: macos-15
+            allow_failure: false
+          - os: ubuntu-22.04
+            allow_failure: true
+          - os: windows-2025
+            allow_failure: true
+    continue-on-error: ${{ matrix.allow_failure }}
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
