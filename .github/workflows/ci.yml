@@ -86,7 +86,7 @@ jobs:
       - name: Build for ${{ matrix.platform }}
         run: |
           xcodebuild \
-            -scheme Commander-Package \
+            -scheme Commander \
             -destination "generic/platform=${{ matrix.platform }}" \
             -skipPackagePluginValidation \
             -skipMacroValidation \
