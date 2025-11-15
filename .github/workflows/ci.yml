@@ -10,7 +10,10 @@ on:
 jobs:
   desktop-swift:
     name: Desktop Swift (${{ matrix.os }})
+    # SwiftTesting hits signal 11 on Linux with Swift 6.2.1; allow that leg to fail until SR is fixed upstream.
+    continue-on-error: ${{ matrix.os == 'ubuntu-22.04' }}
     strategy:
+      fail-fast: false
       matrix:
         os: [macos-15, ubuntu-22.04, windows-2025]
     runs-on: ${{ matrix.os }}
