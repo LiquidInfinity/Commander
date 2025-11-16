@@ -88,10 +88,14 @@ public struct Argument<Value: ExpressibleFromArgument>: CommanderMetadata {
     /// was never bound.
     public var wrappedValue: Value {
         get {
-            guard let storage else {
-                fatalError("Commander argument '\(Value.self)' accessed before being bound")
+            if let storage {
+                return storage
             }
-            return storage
+            if Value.self is OptionalProtocol.Type {
+                // swiftlint:disable:next force_cast
+                return (Any?.none as! Value)
+            }
+            fatalError("Commander argument '\(Value.self)' accessed before being bound")
         }
         set {
             self.storage = newValue
