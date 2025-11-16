@@ -20,7 +20,6 @@ private struct SampleSubcommand: ParsableCommand {
 }
 
 @Suite("CommandDescription")
-@MainActor
 struct CommandDescriptionTests {
     @Test("Defaults to empty values")
     func defaultValues() {
@@ -42,8 +41,10 @@ struct CommandDescriptionTests {
     }
 
     @Test("Commands expose metadata without configuration shim")
-    func commandMetadataIsAvailable() {
-        let description = SampleRootCommand.commandDescription
+    func commandMetadataIsAvailable() async {
+        let description = await MainActor.run {
+            SampleRootCommand.commandDescription
+        }
         #expect(description.commandName == "sample")
         #expect(description.subcommands.count == 1)
         #expect(description.defaultSubcommand.map { $0 == SampleSubcommand.self } == true)
