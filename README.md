@@ -163,10 +163,6 @@ let jsonFlag = FlagDefinition(
 
 For advanced scenarios, `CommanderBindableValues` gives you helpers (`decodeOption`, `requireOption`, `makeWindowOptions`, etc.) so existing command types can conform to `CommanderBindableCommand` and hydrate themselves from parsed values without rewriting runtime logic.
 
-## Contributing
-
-If you need an API or notice a bug, open an issue/PR in https://github.com/steipete/Commander. Please include repro steps and any command metadata involved so we can extend the shared test suites.
-
 ## License
 
 Commander is released under the MIT license. Refer to `LICENSE` for details.
