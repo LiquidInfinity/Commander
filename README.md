@@ -1,4 +1,4 @@
-# Commander ⚔️ — Swift-first parsing, zero forks
+# Commander 🎛️ — Swift-first parsing, zero forks
 
 <p align="center">
   <img src="assets/commander.png" alt="Commander overview" width="1100">
