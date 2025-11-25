@@ -6,7 +6,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Swift-6.2+-FA7343?style=for-the-badge&logo=swift&logoColor=white" alt="Swift 6.2+">
-  <img src="https://img.shields.io/badge/platforms-macOS%20%7C%20Linux%20%7C%20iOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20visionOS%20%7C%20Android-blue?style=for-the-badge" alt="Platforms">
+  <img src="https://img.shields.io/badge/platforms-macOS%20%7C%20Linux%20%7C%20iOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20visionOS-blue?style=for-the-badge" alt="Platforms">
   <a href="https://github.com/steipete/Commander/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/steipete/Commander/ci.yml?style=for-the-badge&label=tests" alt="CI Status"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green?style=for-the-badge" alt="MIT License"></a>
 </p>
@@ -17,7 +17,7 @@
 
 Commander is Peekaboo's Swift-native command-line framework. It combines declarative property wrappers, a lightweight parser/router, and runtime helpers that integrate tightly with async/await + approachable concurrency.
 
-**Platform story:** Commander targets the platforms we actively test: macOS, Linux, Apple simulators (iOS/tvOS/watchOS/visionOS), and Android via `--swift-sdk android`. Windows builds aren’t supported or exercised in CI, so we no longer advertise them.
+**Platform story:** Commander targets the platforms we actively test: macOS, Linux, and Apple simulators (iOS/tvOS/watchOS/visionOS). Windows and Android builds are not supported or exercised in CI, so we no longer advertise them.
 
 ## Highlights
 
